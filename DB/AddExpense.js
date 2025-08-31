@@ -1,5 +1,6 @@
 import { addDoc, collection } from 'firebase/firestore'
-export const AddReadingQuestion = async (req, res) => {
+import { db } from '../FireBaseConfig.js'
+export const AddExpense = async (req, res) => {
   try {
     // Destructure required fields from request body
     const { Project, expense, description } = req.body
@@ -16,7 +17,7 @@ export const AddReadingQuestion = async (req, res) => {
     }
 
     const docRef = await addDoc(
-      collection(DB, 'Expenses', Project),
+      collection(db, 'Projects', Project, 'Expenses'),
       ExpenseDetails
     )
     // Return the new document ID
