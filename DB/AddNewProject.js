@@ -1,30 +1,30 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { Auth, DB } from '../../../Config/FirebaseConfig.js'
-import {
-  doc,
-  setDoc,
-  collection,
-  getDocs,
-  query,
-  where,
-} from 'firebase/firestore'
-export const UserSignup = async (req, res) => {
+import { doc, setDoc } from 'firebase/firestore'
+import { db } from '../FireBaseConfig.js'
+
+export const AddProject = async (req, res) => {
   const { ProjectName } = req.body
-  if (ProjectName) {
-    return res.status(400).json({ message: 'Project Name are required' })
+
+  // Validation: ProjectName must be provided
+  if (!ProjectName) {
+    return res.status(400).json({ message: 'Project Name is required' })
   }
+
   try {
-    // Save user data in Firestore
-    const ProjectRef = doc(DB, 'Project', Project)
+    // Create a reference with ProjectName as the document ID
+    const ProjectRef = doc(db, 'Projects', ProjectName)
+
+    // Save project data in Firestore
     await setDoc(ProjectRef, {
       ProjectName,
+      createdAt: new Date().toISOString(),
     })
+
     return res.status(200).json({
       message: 'Project registered successfully',
-      userId: uid,
+      projectId: ProjectName, // using ProjectName as doc ID
     })
   } catch (error) {
-    console.error('Signup Error:', error)
+    console.error('AddProject Error:', error)
     return res.status(500).json({ message: error.message })
   }
 }
