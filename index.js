@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import { expenserouter } from './Routes/Expense/Expense.js'
 dotenv.config()
 const app = express()
 // Body-parser middleware to parse JSON and URL-encoded data
@@ -14,3 +15,4 @@ app.use(cors(corsOptions))
 app.listen(process.env.Port, () => {
   console.log(`Server is Running On ${process.env.Port} `)
 })
+app.use('/api/expense', expenserouter)
