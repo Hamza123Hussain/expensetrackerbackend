@@ -2,7 +2,7 @@ import { doc, setDoc } from 'firebase/firestore'
 import { db } from '../FireBaseConfig.js'
 
 export const AddProject = async (req, res) => {
-  const { ProjectName } = req.body
+  const { ProjectName, UserName } = req.body
 
   // Validation: ProjectName must be provided
   if (!ProjectName) {
@@ -17,6 +17,7 @@ export const AddProject = async (req, res) => {
     await setDoc(ProjectRef, {
       ProjectName,
       createdAt: new Date().toISOString(),
+      UserName,
     })
 
     return res.status(200).json({
