@@ -3,7 +3,7 @@ import { db } from '../FireBaseConfig.js'
 export const AddExpense = async (req, res) => {
   try {
     // Destructure required fields from request body
-    const { Project, expense, description } = req.body
+    const { Project, expense, description, name } = req.body
     // Validate input
     if (!Project || !expense || !description) {
       return res
@@ -14,6 +14,8 @@ export const AddExpense = async (req, res) => {
     const ExpenseDetails = {
       expense,
       description,
+      name,
+      Project,
     }
 
     const docRef = await addDoc(
